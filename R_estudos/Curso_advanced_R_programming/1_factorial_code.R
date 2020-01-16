@@ -3,18 +3,16 @@
 
 #Factorial_loop: a version that computes the factorial of an integer using looping (such as a for loop)
 Factorial_loop <- function(n){
-    if(n == 0){
-        return 1
-    }
-    else if(n < 0){
+    aux = 1
+    if(n < 0){
         stop("Doesn't exist negative factorial.")
     }
-    else{
-        aux = 1
+    else if (n > 0){
         for(i in 1:n){
-            
+            aux <- aux*i
         }
     }
+    return aux
 }
 
 
