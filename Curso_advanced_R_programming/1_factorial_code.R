@@ -18,11 +18,16 @@ factorial_loop <- function(n){
 #Factorial_reduce: a version that computes the factorial using the reduce()
 # function in the purrr package. Alternatively, you can use the 
 #Reduce() function in the base package.
+
+# To avoid integer overflow error (whan result is greater than value below)
+## .Machine$integer.max 2.147.483.647
+### I coerced product x*y to double (forum hint)
+
 library("purrr")
 factorial_reduce <- function(n){
   stopifnot(n>=0 & n%%1==0)
-  if(n==0){return(1)}
-  reduce(1:n, function(x,y){x*y})
+  if(n==0){ return(1) }
+  reduce( 1:n, function(x,y) { as.double(x * y) } )
 }
 
 #Factorial_func: a version that uses recursion to compute the factorial.
@@ -59,3 +64,7 @@ reduce_data <- map(1:10, function(x){microbenchmark(factorial_reduce(x), times =
 factorial_data <- map(1:10, function(x){microbenchmark(factorial_func(x), times = 100)$time})
 
 mem_data <- map(1:10, function(x){microbenchmark(factorial_mem(x), times = 100)$time})
+
+
+## salvando a saida
+capture.output()
