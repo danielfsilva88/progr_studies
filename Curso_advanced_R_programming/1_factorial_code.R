@@ -57,14 +57,20 @@ factorial_mem <- function(n){
 #### Benchmark ####
 
 library(microbenchmark)
-loop_data <- map(1:10, function(x){microbenchmark(factorial_loop(x), times = 100)$time})
+loop_data <- map(1:15, function(x){microbenchmark(factorial_loop(x), times = 1000)$time})
 
-reduce_data <- map(1:10, function(x){microbenchmark(factorial_reduce(x), times = 100)$time})
+reduce_data <- map(1:15, function(x){microbenchmark(factorial_reduce(x), times = 100)$time})
 
-factorial_data <- map(1:10, function(x){microbenchmark(factorial_func(x), times = 100)$time})
+factorial_data <- map(1:15, function(x){microbenchmark(factorial_func(x), times = 100)$time})
 
-mem_data <- map(1:10, function(x){microbenchmark(factorial_mem(x), times = 100)$time})
+mem_data <- map(1:15, function(x){microbenchmark(factorial_mem(x), times = 100)$time})
 
+result_data <- map(1:15, function(x){microbenchmark(factorial_loop(x),
+                                                    factorial_reduce(x),
+                                                    factorial_func(x),
+                                                    factorial_mem(x))})
+
+summary(factorial_data[[1]])
 
 ## salvando a saida
-capture.output()
+capture.output(factorial_data[[15]], "factorial_output.txt")
