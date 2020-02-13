@@ -8,9 +8,10 @@ getwd()
 ## Load any other packages that you may need to execute your code
 data <- read_csv("C:/Users/dferreira/Documents/SEE/estudos_R/Curso_advanced_R_programming/2_data/data/MIE.csv")
 
-source("2_oop_code.R")
+source("Submission/2_oop_code.R")
 
 # S3 first
+sink("Submission/2_oop_output.txt")
 x <- make_LD_S3(data) # ok
 x <- make_LD_S4(data) 
 x <- make_LD_RC(data) 
@@ -39,3 +40,5 @@ print(out)
 
 out <- subject(x, 44) %>% visit(1) %>% room("living room") %>% summary 
 print(out)                                                             
+
+sink()
