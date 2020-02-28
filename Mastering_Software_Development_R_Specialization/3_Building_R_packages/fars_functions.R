@@ -1,3 +1,20 @@
+#' "fars"
+#' 
+#' This script have functions to read and manipulate fars data.
+#' 
+#' Read file with fars data
+#' 
+#' This function checks if a string passed as argument is a existing csv file, 
+#' extract it and returns a \code{tbl_df} data
+#' 
+#' @param filename String containing the name of the csv file to be read
+#' 
+#' @return This function returns a data structure of type \code{tbl_df}
+#' 
+#' @examples
+#' fars_read("file.csv")
+#' 
+#' @export
 fars_read <- function(filename) {
         if(!file.exists(filename))
                 stop("file '", filename, "' does not exist")
@@ -7,11 +24,41 @@ fars_read <- function(filename) {
         dplyr::tbl_df(data)
 }
 
+
+#' Generates a filename with a specified year
+#' 
+#' This function takes an object, try to pass it to an integer and return
+#' a string using the received object
+#' 
+#' @param year Object containing numbers
+#' 
+#' @return A filename string with input received 
+#' 
+#' @examples
+#' make_filename(2018)
+#' make_filename("2018")
+#' make_filename(c("2018", "2019"))
+#' 
+#' @export
 make_filename <- function(year) {
         year <- as.integer(year)
         sprintf("accident_%d.csv.bz2", year)
 }
 
+#' Read file with fars data
+#' 
+#' This function checks if a string passed as argument is a existing csv file, 
+#' extract it and returns a \code{tbl_df} data
+#' 
+#' @param years String containing the name of the csv file to be read
+#' 
+#' @return This function returns a data structure of type \code{tbl_df}
+#' 
+#' @examples
+#' fars_read_years()
+#' fars_read_years()
+#' 
+#' @export
 fars_read_years <- function(years) {
         lapply(years, function(year) {
                 file <- make_filename(year)
@@ -26,6 +73,19 @@ fars_read_years <- function(years) {
         })
 }
 
+#' Read file with fars data
+#' 
+#' This function checks if a string passed as argument is a existing csv file, 
+#' extract it and returns a \code{tbl_df} data
+#' 
+#' @param years String containing the name of the csv file to be read
+#' 
+#' @return This function returns a data structure of type \code{tbl_df}
+#' 
+#' @examples
+#' fars_summarize_years(years)
+#' 
+#' @export
 fars_summarize_years <- function(years) {
         dat_list <- fars_read_years(years)
         dplyr::bind_rows(dat_list) %>% 
@@ -34,6 +94,20 @@ fars_summarize_years <- function(years) {
                 tidyr::spread(year, n)
 }
 
+#' Read file with fars data
+#' 
+#' This function checks if a string passed as argument is a existing csv file, 
+#' extract it and returns a \code{tbl_df} data
+#' 
+#' @param state.num String containing the name of the csv file to be read
+#' @param year String containing the name of the csv file to be read
+#' 
+#' @return This function returns a data structure of type \code{tbl_df}
+#' 
+#' @examples
+#' fars_map_state(state.num, year)
+#' 
+#' @export
 fars_map_state <- function(state.num, year) {
         filename <- make_filename(year)
         data <- fars_read(filename)
