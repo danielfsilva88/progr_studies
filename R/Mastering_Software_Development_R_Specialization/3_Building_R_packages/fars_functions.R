@@ -1,7 +1,7 @@
 #' Read fars data file
 #' 
 #' This function checks if a string passed as argument is a existing csv file, 
-#' extract it and returns a \code{tbl_df} data
+#' extract it and returns a \code{tbl_df} data. Treated here as internal function.
 #' 
 #' @param filename String containing the name of the csv file to be read
 #' 
@@ -9,9 +9,6 @@
 #' 
 #' @importFrom readr read_csv
 #' @importFrom dplyr tbl_df
-#' 
-#' @examples
-#' \dontrun{fars_read("file.csv")}
 #' 
 fars_read <- function(filename) {
         if(!file.exists(filename))
@@ -25,15 +22,11 @@ fars_read <- function(filename) {
 #' Generates a filename with a specified year
 #' 
 #' This function takes an object, try to pass it to an integer and return
-#' a string using the received object
+#' a string using the received object. Treated here as internal function.
 #' 
 #' @param year Object containing numbers
 #' 
 #' @return A filename string with input received 
-#' 
-#' @examples
-#' \dontrun{make_filename(2018)}
-#' \dontrun{make_filename(c("2018", "2019"))}
 #' 
 make_filename <- function(year) {
         year <- as.integer(year)
@@ -44,7 +37,7 @@ make_filename <- function(year) {
 #' 
 #' This function gets an array of string or int with years
 #' and returns a list of fars data corresponding to years inputed or
-#' a warning that there is not a fars data to a specific year
+#' a warning that there is not a fars file in a specific year
 #' 
 #' @param years String containing the name of the csv file to be read
 #' 
