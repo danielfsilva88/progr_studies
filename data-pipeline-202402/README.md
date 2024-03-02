@@ -18,15 +18,16 @@
 ### External references
 
 1. Kafka quickstart: https://kafka.apache.org/quickstart
-  a. Find kafka executable files in Linux system:
-    i. $ find / -name "kafka*.sh"
-  b. Topic: 
-    i. Create topic: kafka-topics.sh --create --topic <topic-name> --bootstrap-server <server:port>
-    ii. Describe topic: kafka-topics.sh --describe --topic <topic-name> --bootstrap-server <server:port>
-  c. Events:
-    i. Write events: kafka-console-producer.sh --topic <topic-name> --bootstrap-server <server:port>
-      1. A terminal will be open
-      2. You can write any text, the message will be sent when hit "Enter"
-      3. You can exit from the screen hitting Ctrl+c
-    ii. Read events: kafka-console-consumer.sh --topic <topic-name> --from-beginning --bootstrap-server <server:port>
+  a. Find kafka executable files in Linux system:  
+    i. $ find / -name "kafka*.sh"  
+  b. Topic:   
+    i. Create topic: kafka-topics.sh --create --topic <topic-name> --bootstrap-server <server:port>  
+    ii. Describe topic: kafka-topics.sh --describe --topic <topic-name> --bootstrap-server <server:port>  
+  c. Events:  
+    i. Write events: kafka-console-producer.sh --topic <topic-name> --bootstrap-server <server:port>  
+      1. A terminal will be open  
+      2. You can write any text, the message will be sent when hit "Enter"  
+      3. You can exit from the screen hitting Ctrl+c  
+    ii. Read events: kafka-console-consumer.sh --topic <topic-name> --from-beginning --bootstrap-server <server:port>  
+
     
