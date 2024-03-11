@@ -10,7 +10,8 @@ password = "sua_senha"
 sql_tbl_create = """
 CREATE TABLE IF NOT EXISTS pygest_v1 (
   id SERIAL PRIMARY KEY,
-  data JSONB NOT NULL,
+  kafka_data JSONB NOT NULL,
+  kafka_timestamp TIMESTAMP NOT NULL,
   ingestion_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );"""
 
