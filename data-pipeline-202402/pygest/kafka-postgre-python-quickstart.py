@@ -13,7 +13,7 @@ def insert_into_postgres(data):
     # Assuming data is a dictionary, extract relevant keys for your table columns
     # Modify this section based on your actual data structure and table schema
     message = data["msg"]  # Example: assuming "message" key exists in data
-    created_at = data.get("created_at")  # Example: using get() for optional "created_at" key
+    created_at = data["timestp"]  # Example: using get() for optional "created_at" key
 
     # Insert data into the table (replace table_name and column names)
     sql = """INSERT INTO pygest_v1 (kafka_data, kafka_timestamp) VALUES (%s, %s)"""
@@ -32,7 +32,7 @@ def insert_into_postgres(data):
 def consume_and_insert():
   """Consumes messages from Kafka and inserts them into PostgreSQL."""
   # Replace with your Kafka broker details
-  consumer = KafkaConsumer("quickstart-topic", bootstrap_servers=["localhost:9092"])
+  consumer = KafkaConsumer("quickstart-topic", bootstrap_servers=["localhost:9092"], auto_offset_reset='earliest')
 
   for msg in consumer:
     # Deserialize the message (if necessary)
