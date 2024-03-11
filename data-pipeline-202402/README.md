@@ -17,10 +17,16 @@
 
 ### Configuring environment
 
+#### Docker  
+
 1. Use docker compose file in this folder (compose-zoo-kafka-postg.yaml) to set a zoo-keeper, a kafka, and a Postgree DB;  
 2. To enable this environment, use the command: $ docker compose -f compose-zoo-kafka-postg.yaml up -d  
 3. To access the "kafka terminal", use the command: $ docker exec -it kafka bash  
-4. To disable this environment, use the command: $ docker compose -f compose-zoo-kafka-postg.yaml down   
+
+#### Local environment  
+
+4. To have one of the simplest python virtual environment managers (venv), one should execute in local Linux: $ sudo apt-get install python3-venv -y   
+5. To have the Python database connector library to PostgreSQL (psycopg2) installed, without install Postgre itself locally, one can execute in local Linux: $ sudo apt-get install libpq-dev gcc -y  
 
 ### External references
 
@@ -36,4 +42,7 @@
       2. You can write any text, the message will be sent when hit "Enter"  
       3. You can exit from the screen hitting Ctrl+c  
     ii. Read events: kafka-console-consumer.sh --topic "<topic-name>" --from-beginning --bootstrap-server \<server:port\>  
-  
+2. Kafka-python library page: https://pypi.org/project/kafka-python/  
+3. Postgre-python connector library page: https://pypi.org/project/psycopg2/  
+  a. Psycopg2 documentation page: https://www.psycopg.org/docs/  
+
