@@ -22,19 +22,21 @@ for i in range(2):
 
 # Flush the producer to ensure all messages are sent
 producer.flush()
+producer.close()
 
 # Create a Kafka consumer
 consumer = KafkaConsumer(topic, bootstrap_servers=bootstrap_servers, auto_offset_reset='earliest')
 
-# Consume messages from the topic
-for message in consumer:
-  if message.value:
-    print(f"Consumed: {message.value.decode('utf-8')}")
-    break
-  else:
-    print("No new messages available.")
-
-# Close the consumer and producer
-consumer.close()
-producer.close()
-
+# Read in a dummy way but being able to exit without error messages
+try:
+  for msg in consumer:
+    if msg:
+      print(msg)
+    else:
+      print("No new messages available.")
+except KeyboardInterrupt:
+  # Handle user interrupt (Ctrl+C) gracefully
+  pass
+finally:
+  # Close the consumer
+  consumer.close()
