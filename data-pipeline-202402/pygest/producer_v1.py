@@ -1,5 +1,7 @@
 from kafka import KafkaProducer
-import time, json
+import time, json, sys
+
+num_of_messages = int(sys.argv[1])
 
 # Kafka broker(s) address
 bootstrap_servers = ['localhost:9092']
@@ -10,12 +12,12 @@ producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
                          )
 
 # Produce messages to a topic
-topic = 'volume-topic-v1'
+topic = 'volume-topic-v2'
 
-for i in range(100):
+for i in range(num_of_messages):
   message = {"msg_id": i, "msg": f"Message {i}", "msg_timestamp": time.strftime("%Y-%m-%d %H:%M:%S")}
   producer.send(topic, message)
-  if i % 10 == 0:
+  if i % 100000 == 0:
     print(f"{i} - Produced: {message}")
 
 # Flush the producer to ensure all messages are sent
