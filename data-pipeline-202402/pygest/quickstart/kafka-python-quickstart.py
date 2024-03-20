@@ -7,7 +7,8 @@ bootstrap_servers = 'localhost:9092'
 # Create a Kafka producer
 #producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
 producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
-                         value_serializer=lambda m: json.dumps(m).encode('utf-8')
+                         value_serializer=lambda m: json.dumps(m).encode('utf-8'),
+                         compression_type="gzip"
                          )
 
 # Produce messages to a topic
