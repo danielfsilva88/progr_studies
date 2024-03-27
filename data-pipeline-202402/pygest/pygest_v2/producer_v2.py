@@ -1,6 +1,8 @@
 from kafka import KafkaProducer
 import time, json, sys
 
+# get from terminal num of messages to produce
+# without compression took 1m30s to produce 1 Mi msgs
 num_of_messages = int(sys.argv[1])
 
 # Kafka broker(s) address
@@ -8,7 +10,8 @@ bootstrap_servers = ['localhost:9092']
 
 # Create a Kafka producer
 producer = KafkaProducer(bootstrap_servers=bootstrap_servers,
-                         value_serializer=lambda m: json.dumps(m).encode('utf-8')
+                         value_serializer=lambda m: json.dumps(m).encode('utf-8'),
+                         compression_type='gzip'
                          )
 
 # Produce messages to a topic

@@ -6,13 +6,14 @@ def format_kafka_time(long_timestamp):
 
 conn = psycopg2.connect(host="localhost", database="nome_do_db", user="seu_user", password="sua_senha")
 cur = conn.cursor()
-sql = """INSERT INTO pygest_v3 (kafka_data, kafka_timestamp) VALUES (%s, %s)"""
+sql = """INSERT INTO pygest_v2 (kafka_data, kafka_producer_timestamp, kafka_consumer_timestamp) VALUES (%s, %s, %s)"""
 
 consumer = KafkaConsumer("volume-topic-v2", bootstrap_servers=["localhost:9092"], auto_offset_reset='earliest')
+
 try:
   i = 0
   for msg in consumer:
-    cur.execute( sql, ( msg.value.decode("utf-8"), format_kafka_time(msg.timestamp) ) )
+    cur.execute( sql, ( msg.value.decode("utf-8"), format_kafka_time(msg.timestamp), time.strftime("%Y-%m-%d %H:%M:%S") ) )
     conn.commit()
     i+=1
     if i % 50000 == 0:
