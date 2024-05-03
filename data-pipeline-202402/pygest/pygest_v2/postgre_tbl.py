@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS pygest_v2 (
   kafka_data JSONB NOT NULL,
   kafka_producer_timestamp TIMESTAMP NOT NULL,
   kafka_consumer_timestamp TIMESTAMP NOT NULL,
-  ingestion_timestamp TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+  ingestion_timestamp TIMESTAMP NOT NULL DEFAULT NOW() - interval '3 hour'
 );
 
 comment on column pygest_v2.kafka_producer_timestamp is 'Time when data got into Kafka topic';

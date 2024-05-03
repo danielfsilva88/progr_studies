@@ -3,7 +3,8 @@ import time, json, sys
 
 # get from terminal num of messages to produce
 # without compression took 1m30s to produce 1 Mi msgs
-num_of_messages = int(sys.argv[1])
+# num_of_messages = int(sys.argv[1])
+num_of_messages = 10
 
 # Kafka broker(s) address
 bootstrap_servers = ['localhost:9092']
