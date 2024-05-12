@@ -21,7 +21,8 @@ consumer = KafkaConsumer(
   topic_name, 
   bootstrap_servers=["localhost:9092"], 
   auto_offset_reset='earliest',
-  group_id='consumer_group_test'
+  group_id='group_v2_1',
+  consumer_timeout_ms=10000
 )
 # consumer.subscribe([topic_name])
 
