@@ -4,7 +4,7 @@ import time, json, sys
 # get from terminal num of messages to produce
 # without compression took 1m30s to produce 1 Mi msgs
 # num_of_messages = int(sys.argv[1])
-num_of_messages = 10
+num_of_messages = 100000
 
 # Kafka broker(s) address
 bootstrap_servers = ['localhost:9092']
@@ -21,8 +21,11 @@ topic = 'volume-topic-v2'
 for i in range(num_of_messages):
   message = {"msg_id": i, "msg": f"Message {i}", "msg_timestamp": time.strftime("%Y-%m-%d %H:%M:%S")}
   producer.send(topic, message)
-  if i % 100000 == 0:
+  if i % 50000 == 0:
     print(f"{i} - Produced: {message}")
+
+# Print last message time
+print(f"{i} - Produced: {message}")
 
 # Flush the producer to ensure all messages are sent
 producer.flush()
