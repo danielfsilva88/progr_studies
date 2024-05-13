@@ -33,23 +33,16 @@ def write_msg_into_db(msg):
 # kafka consumer configs
 batch_size = 100000
 poll_timeout = 1000
-topic_name = "volume-topic-v2"
-consumer = KafkaConsumer(
-  topic_name,
-  bootstrap_servers=["localhost:9092"], 
-  auto_offset_reset='earliest',
-  group_id='group_v2_1',
-  consumer_timeout_ms=1000
+topic_name = "volume-topic-v3"
+consumer = KafkaConsumer(topic_name, bootstrap_servers=["localhost:9092"], auto_offset_reset='earliest',
+  group_id='group_v2_1', consumer_timeout_ms=1000
 )
 mypartition=TopicPartition(topic_name, 0)
 # consumer.assign([mypartition])
 # consumer.seek_to_beginning(mypartition)
 # print(consumer.position(mypartition))
 # Continuously poll for messages
-switch_state = True
-i=0
-idle_counter = 0
-list_of_offsets = {}
+switch_state = True; i=0; idle_counter = 0; list_of_offsets = {}
 try:
   while switch_state:
     # Get a batch of messages
@@ -58,11 +51,11 @@ try:
     if record:
       # Process the batch of messages straight from ConsumerRecord list
       # for msg in list(record.values())[0]:
-      #   write_msg_into_db(conn, cur, msg)
-      #   if i % 50000 == 0:
-      #     print(msg.value.decode("utf-8"), format_kafka_time(msg.timestamp), time.strftime("%Y-%m-%d %H:%M:%S"))
-      #     print(f"{i} - Data inserted successfully!")
-      #   i+=1
+        # list_of_offsets[i] = write_msg_into_db(msg)
+        # if i % 50000 == 0:
+        #   print(msg.value.decode("utf-8"), format_kafka_time(msg.timestamp), time.strftime("%Y-%m-%d %H:%M:%S"))
+        #   print(f"{i} - Data inserted successfully!")
+        # i+=1
       print("Find record!")
       list_of_offsets[i] = list(map(write_msg_into_db, list(record.values())[0]))
       i+=1
@@ -73,7 +66,7 @@ try:
 
     # Commit offsets periodically (optional)
     consumer.commit()
-    if idle_counter == 23: 
+    if idle_counter == 12: 
       # break;
       switch_state = False
 

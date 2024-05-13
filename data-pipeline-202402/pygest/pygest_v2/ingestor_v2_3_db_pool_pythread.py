@@ -1,6 +1,7 @@
 from kafka import KafkaConsumer
 import psycopg2, time
 from psycopg2 import pool
+from multiprocessing.dummy import Pool as ThreadPool
 
 def format_kafka_time(long_timestamp):
   return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(long_timestamp/1000))
@@ -17,6 +18,7 @@ host = "localhost"; db = "nome_do_db"; usr = "seu_user"; pw = "sua_senha"
 db_pool = psycopg2.pool.ThreadedConnectionPool(1, 10, user=usr, password=pw, host='localhost', port='5432', database=db)
 conn_pool = db_pool.getconn() 
 cursor = conn_pool.cursor() 
+py_pool = ThreadPool(8)
 
 # Use pool connection to execute a query 
 def write_msg_into_db(msg):
@@ -35,7 +37,7 @@ def consume_msgs():
       # Check if there are any messages
       if msg_batch:
         print("Find record!")
-        list_of_offsets[i] = list(map(write_msg_into_db, list(msg_batch.values())[0]))
+        list_of_offsets[i] = list(py_pool.map(write_msg_into_db, list(msg_batch.values())[0]))
         i+=1
       else:
         # No messages received in this poll
@@ -53,6 +55,8 @@ def consume_msgs():
     print("Error while inserting data:", error)
   finally:
     consumer.close()
+    py_pool.close()
+    py_pool.join()
     db_pool.closeall()
   for n in list_of_offsets:
     print(n, len(list_of_offsets[n]))
